@@ -67,14 +67,8 @@ input{font-family:inherit;}
   display:flex;align-items:center;justify-content:center;color:#fff;
 }
 .brand-name{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--blue-deep);}
-.nav-right{display:flex;align-items:center;gap:6px;}
-.nav-link{
-  padding:8px 13px;border-radius:9px;font-weight:600;font-size:13.5px;
-  color:var(--ink-soft);transition:background .15s,color .15s;
-}
-.nav-link.active,.nav-link:hover{background:var(--blue-pale);color:var(--blue-deep);}
+.nav-right{display:flex;align-items:center;gap:10px;}
 
-/* Saldo chip (pojok kanan atas) */
 .saldo-chip{
   display:flex;align-items:center;gap:7px;
   background:linear-gradient(135deg,#FFF7E9,#FDEFD6);
@@ -86,19 +80,6 @@ input{font-family:inherit;}
 }
 .saldo-chip svg{color:#B8801F;}
 .saldo-chip small{font-size:10px;font-weight:700;opacity:.7;display:block;line-height:1;margin-bottom:1px;}
-
-.nav-cart{
-  position:relative;display:flex;align-items:center;gap:7px;
-  padding:9px 14px;border-radius:9px;background:var(--blue-deep);color:#fff;
-  font-weight:700;font-size:13px;transition:background .15s;
-}
-.nav-cart:hover{background:var(--blue-primary);}
-.cart-badge{
-  position:absolute;top:-5px;right:-5px;background:var(--accent);color:var(--blue-deep);
-  font-size:10.5px;font-weight:800;border-radius:999px;min-width:17px;height:17px;
-  display:flex;align-items:center;justify-content:center;padding:0 4px;
-}
-.cart-badge.hidden{display:none;}
 
 /* ================= PAGES ================= */
 .page{display:none;min-height:calc(100vh - var(--nav-h));animation:fadeSlide .28s ease;}
@@ -154,37 +135,39 @@ input{font-family:inherit;}
 }
 @keyframes shimmer{to{background-position:220% 0;}}
 .hero-sub{color:rgba(255,255,255,.85);max-width:460px;font-size:14px;margin-bottom:16px;}
-.hero-cta{align-self:flex-start;}
 
 /* ================= SEARCH ================= */
-.search-wrap{position:relative;margin:-26px auto 0;max-width:660px;z-index:5;}
+.search-wrap{position:relative;margin:34px auto 0;max-width:640px;padding:0 4px;}
 .search-bar{
-  display:flex;align-items:center;gap:10px;background:#fff;
-  border:1px solid var(--line);border-radius:14px;padding:13px 16px;
-  box-shadow:0 14px 30px -18px rgba(11,59,92,.4);
+  display:flex;align-items:center;gap:12px;background:#fff;
+  border:1px solid var(--line);border-radius:999px;padding:14px 20px;
+  box-shadow:0 14px 30px -20px rgba(11,59,92,.35);
   transition:border-color .15s,box-shadow .15s;
 }
-.search-bar:focus-within{border-color:var(--blue-sky);box-shadow:0 16px 34px -16px rgba(21,94,146,.4);}
-.search-bar input{border:none;outline:none;flex:1;font-size:14.5px;background:transparent;color:var(--ink);}
+.search-bar:focus-within{border-color:var(--blue-sky);box-shadow:0 16px 34px -18px rgba(21,94,146,.4);}
+.search-bar input{
+  border:none;outline:none;flex:1;font-size:14.5px;
+  background:transparent;color:var(--ink);min-width:0;
+}
 .search-bar input::placeholder{color:#9DB2C4;}
-.search-bar .ic{color:var(--ink-soft);}
+.search-bar > .ic{color:var(--ink-soft);}
 .search-go{
-  background:var(--blue-deep);color:#fff;border-radius:9px;
-  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  background:var(--blue-deep);color:#fff;border-radius:50%;
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
   transition:background .15s;flex-shrink:0;
 }
 .search-go:hover{background:var(--blue-primary);}
 
 .suggest{
-  position:absolute;top:calc(100% + 8px);left:0;right:0;
-  background:#fff;border:1px solid var(--line);border-radius:14px;
-  box-shadow:0 22px 44px -24px rgba(11,59,92,.5);
+  position:absolute;top:calc(100% + 10px);left:4px;right:4px;
+  background:#fff;border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 24px 46px -24px rgba(11,59,92,.5);
   overflow:hidden;display:none;z-index:20;
 }
 .suggest.show{display:block;animation:fadeSlide .18s ease;}
 .suggest-item{
   width:100%;display:flex;align-items:center;gap:12px;
-  padding:10px 14px;text-align:left;transition:background .12s;
+  padding:11px 14px;text-align:left;transition:background .12s;
   border-bottom:1px solid var(--line);
 }
 .suggest-item:last-child{border-bottom:none;}
@@ -196,11 +179,36 @@ input{font-family:inherit;}
 .suggest-price{font-family:'Fraunces',serif;font-weight:700;font-size:13px;color:var(--blue-deep);white-space:nowrap;}
 .suggest-empty{padding:16px;text-align:center;font-size:13px;color:var(--ink-soft);}
 
+/* ================= CATEGORY CHIPS ================= */
+.cat-bar{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+  margin:26px auto 8px;max-width:760px;padding:0 4px;
+}
+.cat-chip{
+  padding:9px 18px;border-radius:999px;
+  border:1.5px solid var(--line);background:#fff;
+  font-size:13px;font-weight:600;color:var(--ink-soft);
+  transition:all .15s ease;
+  white-space:nowrap;
+}
+.cat-chip:hover{border-color:var(--blue-sky);color:var(--blue-deep);}
+.cat-chip.active{
+  background:var(--blue-deep);color:#fff;border-color:var(--blue-deep);
+  box-shadow:0 8px 18px -12px rgba(11,59,92,.7);
+}
+.cat-chip .cat-count{
+  display:inline-block;margin-left:6px;font-size:11px;opacity:.7;font-weight:700;
+}
+.cat-chip.active .cat-count{opacity:.85;}
+
 /* ================= SECTIONS ================= */
-.section-label{display:flex;align-items:center;justify-content:space-between;margin:34px 0 16px;}
+.section-label{display:flex;align-items:center;justify-content:space-between;margin:30px 0 16px;}
 .section-label h2{font-size:19px;}
-.section-label a{font-size:13px;font-weight:700;color:var(--blue-primary);}
-.section-label a:hover{text-decoration:underline;}
+.section-label .result-count{
+  font-size:12.5px;font-weight:700;color:var(--ink-soft);
+  background:#fff;border:1px solid var(--line);
+  padding:5px 12px;border-radius:999px;
+}
 
 /* ================= CARDS ================= */
 .wahana-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
@@ -208,8 +216,10 @@ input{font-family:inherit;}
   background:#fff;border:1px solid var(--line);border-radius:var(--radius);
   overflow:hidden;display:flex;flex-direction:column;
   transition:border-color .18s,box-shadow .18s,transform .18s;
+  text-align:left;padding:0;cursor:pointer;width:100%;
 }
 .card:hover{border-color:var(--blue-sky);box-shadow:var(--shadow);transform:translateY(-3px);}
+.card:active{transform:translateY(-1px);}
 .card-media{
   position:relative;height:158px;
   background-color:#DCEAF3;background-size:cover;background-position:center;
@@ -234,6 +244,15 @@ input{font-family:inherit;}
 }
 .price{font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--blue-deep);line-height:1.1;}
 .price small{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:10.5px;color:var(--ink-soft);display:block;margin-top:2px;}
+.card-cta{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:800;color:var(--blue-primary);
+}
+.card:hover .card-cta{text-decoration:underline;}
+.empty-grid{
+  grid-column:1/-1;text-align:center;padding:60px 20px;
+  color:var(--ink-soft);font-size:14px;
+}
 
 /* ================= BUTTONS ================= */
 .btn{
@@ -253,14 +272,6 @@ input{font-family:inherit;}
 .btn-block{width:100%;}
 .btn-sm{padding:9px 16px;font-size:12.5px;border-radius:9px;}
 .btn[disabled]{opacity:.5;pointer-events:none;}
-
-/* ================= FILTER CHIPS ================= */
-.filters{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
-.chip{
-  padding:8px 16px;border-radius:999px;border:1px solid var(--line);
-  font-size:13px;font-weight:600;color:var(--ink-soft);background:#fff;transition:all .15s;
-}
-.chip.active,.chip:hover{background:var(--blue-deep);color:#fff;border-color:var(--blue-deep);}
 
 /* ================= DETAIL ================= */
 .detail-back{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--blue-primary);margin-bottom:18px;}
@@ -294,32 +305,18 @@ input{font-family:inherit;}
 .detail-subtotal{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink-soft);margin-bottom:16px;padding-top:14px;border-top:1px solid var(--line);}
 .detail-subtotal b{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:18px;}
 
-/* ================= CART BAR ================= */
-#cartBar{
-  position:fixed;left:0;right:0;bottom:-120px;z-index:50;
-  background:var(--blue-deep);color:#fff;padding:14px 0;
-  transition:bottom .3s cubic-bezier(.22,.9,.3,1);
-  box-shadow:0 -12px 30px -18px rgba(11,59,92,.7);
-}
-#cartBar.show{bottom:0;}
-.cartbar-inner{max-width:1080px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.cartbar-info b{font-family:'Fraunces',serif;font-size:17px;}
-.cartbar-info span{font-size:12px;opacity:.72;display:block;}
-
 /* ================= PAYMENT ================= */
 .pay-layout{display:grid;grid-template-columns:1fr .85fr;gap:22px;align-items:flex-start;}
 .card-panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);}
 .card-panel h3{font-size:16px;margin-bottom:14px;}
-.cart-item-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
-.cart-item-row:last-child{border-bottom:none;}
-.cart-item-media{width:52px;height:52px;border-radius:11px;background-size:cover;background-position:center;background-color:var(--blue-pale);flex-shrink:0;}
-.cart-item-info{flex:1;min-width:0;}
-.cart-item-info b{display:block;font-size:14px;color:var(--ink);}
-.cart-item-info span{font-size:12px;color:var(--ink-soft);}
-.cart-item-right{display:flex;align-items:center;gap:10px;}
-.cart-item-right .amt{font-family:'Fraunces',serif;font-weight:700;color:var(--blue-deep);font-size:14px;}
-.cart-item-remove{color:var(--danger);opacity:.75;transition:opacity .15s;}
-.cart-item-remove:hover{opacity:1;}
+.order-line{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+.order-line:last-child{border-bottom:none;}
+.order-line .thumb{width:52px;height:52px;border-radius:11px;background-size:cover;background-position:center;background-color:var(--blue-pale);flex-shrink:0;}
+.order-line .info{flex:1;min-width:0;}
+.order-line .info b{display:block;font-size:14px;color:var(--ink);}
+.order-line .info span{font-size:12px;color:var(--ink-soft);}
+.order-line .amt{font-family:'Fraunces',serif;font-weight:700;color:var(--blue-deep);font-size:14px;}
+
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
 .field label{font-size:12.5px;font-weight:700;color:var(--blue-deep);}
 .field input{
@@ -346,8 +343,6 @@ input{font-family:inherit;}
 .nota-row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:6px 0;color:var(--ink);}
 .nota-row.sub{color:var(--ink-soft);font-size:12.5px;}
 .nota-total{display:flex;justify-content:space-between;padding-top:13px;margin-top:6px;border-top:1.5px solid var(--blue-deep);font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--blue-deep);}
-.empty-note{text-align:center;padding:64px 20px;color:var(--ink-soft);}
-.empty-note .qi-icon{width:54px;height:54px;border-radius:16px;background:var(--blue-pale);color:var(--blue-primary);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
 
 /* ================= TICKET ================= */
 .tabs{display:flex;gap:8px;margin-bottom:22px;}
@@ -375,7 +370,7 @@ input{font-family:inherit;}
 .qr-box img{width:100%;height:100%;object-fit:contain;}
 .ticket-stub small{font-size:10px;letter-spacing:.03em;opacity:.8;text-align:center;}
 @media print{
-  #navbar,#chatWidget,.tabs,footer,#cartBar,.no-print{display:none!important;}
+  #navbar,#chatWidget,.tabs,footer,.no-print{display:none!important;}
   body{background:#fff;}
   .page{display:none;min-height:0;}
   .page.active{display:block;}
@@ -441,7 +436,7 @@ td{padding:10px 8px;border-bottom:1px solid var(--line);}
 .msg.assistant{background:#fff;border:1px solid var(--line);align-self:flex-start;color:var(--ink);border-bottom-left-radius:4px;}
 .msg.user{background:var(--blue-deep);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
 .chat-input-row{display:flex;border-top:1px solid var(--line);padding:9px;gap:8px;background:#fff;}
-.chat-input-row input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;font-family:inherit;background:#FAFCFE;}
+.chat-input-row input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;font-family:inherit;background:#FAFCFE;min-width:0;}
 .chat-input-row input:focus{outline:none;border-color:var(--blue-sky);background:#fff;}
 .chat-send{width:36px;height:36px;border-radius:10px;background:var(--blue-deep);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
 .chat-send:hover{background:var(--blue-primary);}
@@ -466,15 +461,14 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
   .ticket-stub{border-left:none;border-top:1px dashed rgba(255,255,255,.3);}
 }
 @media(max-width:680px){
-  .nav-link{display:none;}
   .brand-name{font-size:15px;}
   .saldo-chip{padding:6px 11px;font-size:11.5px;}
   .hero{height:290px;border-radius:16px;}
   .hero-content{padding:22px;}
-  .search-wrap{margin-top:-22px;padding:0 4px;}
+  .search-wrap{margin-top:26px;}
+  .cat-bar{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
+  .cat-bar::-webkit-scrollbar{display:none;}
   .wahana-grid,.pay-methods{grid-template-columns:1fr;}
-  .filters{gap:6px;}
-  .chip{padding:7px 14px;font-size:12.5px;}
   .stat-row{grid-template-columns:1fr 1fr;}
   .detail-price-row{flex-direction:column;align-items:flex-start;}
   #chatPanel{width:calc(100vw - 32px);right:-8px;}
@@ -493,10 +487,7 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
       <div class="brand-name">Samudra Land</div>
     </div>
     <div class="nav-right">
-      <a class="nav-link active" data-nav="home" onclick="goToPage('home')">Beranda</a>
-      <a class="nav-link" data-nav="wahana" onclick="goToPage('wahana')">Wahana</a>
       <div class="saldo-chip" id="saldoChip" title="Saldo Samudra"></div>
-      <button class="nav-cart" onclick="handleCartNavClick()" id="navCartBtn"></button>
     </div>
   </div>
 </nav>
@@ -516,7 +507,6 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
           <span class="hero-tag">Pantai Kertajaya · Surabaya</span>
           <h1 class="hero-title">Welcome to <span class="grad">Samudra Land</span></h1>
           <p class="hero-sub">Satu tiket untuk sehari penuh keseruan. Pilih wahana, bayar, tiket QR langsung terbit.</p>
-          <button class="btn btn-accent hero-cta" onclick="goToPage('wahana')">Pilih wahana sekarang</button>
         </div>
       </div>
     </div>
@@ -533,35 +523,22 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
       <div class="suggest" id="searchSuggest"></div>
     </div>
 
-    <div class="section-label">
-      <h2>Wahana favorit</h2>
-      <a href="#" onclick="goToPage('wahana');return false;">Lihat semua</a>
-    </div>
-    <div class="wahana-grid" id="homeWahanaGrid"></div>
+    <!-- CATEGORY CHIPS -->
+    <div class="cat-bar" id="catBar"></div>
 
     <div class="section-label">
-      <h2>Area bermain air</h2>
+      <h2 id="sectionTitle">Semua wahana</h2>
+      <span class="result-count" id="resultCount">13 wahana</span>
     </div>
-    <div class="wahana-grid" id="homeWaterGrid"></div>
-
-  </div>
-</section>
-
-<!-- ============ WAHANA LIST ============ -->
-<section class="page" id="page-wahana">
-  <div class="container page-pad" style="padding-bottom:140px;">
-    <div class="section-label" style="margin-top:0;">
-      <h2>Pilih wahana</h2>
-    </div>
-    <div class="filters" id="filterChips"></div>
     <div class="wahana-grid" id="wahanaGrid"></div>
+
   </div>
 </section>
 
 <!-- ============ WAHANA DETAIL ============ -->
 <section class="page" id="page-detail">
   <div class="container page-pad">
-    <a href="#" class="detail-back" onclick="goToPage('wahana');return false;"><span id="icBack"></span> Kembali ke daftar wahana</a>
+    <a href="#" class="detail-back" onclick="goToPage('home');return false;"><span id="icBack"></span> Kembali ke beranda</a>
     <div class="detail-layout">
       <div class="detail-media" id="detailMedia">
         <span class="detail-media-tag" id="detailTag"></span>
@@ -583,7 +560,7 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
             </div>
           </div>
           <div class="detail-subtotal"><span>Subtotal</span><b id="detailSubtotal">Rp 0</b></div>
-          <button class="btn btn-primary btn-block" onclick="buyFromDetail()">Beli</button>
+          <button class="btn btn-primary btn-block" onclick="buyFromDetail()">Lanjut ke pembayaran</button>
         </div>
       </div>
     </div>
@@ -595,18 +572,12 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
   <div class="container page-pad">
     <div class="section-label" style="margin-top:0;"><h2>Pembayaran</h2></div>
 
-    <div id="payEmptyState" class="empty-note hidden">
-      <div class="qi-icon" id="icEmptyCart"></div>
-      <p>Keranjang kamu masih kosong.</p>
-      <div style="margin-top:16px;"><button class="btn btn-primary" onclick="goToPage('wahana')">Pilih wahana</button></div>
-    </div>
-
     <div class="pay-layout" id="payLayout">
       <div>
         <div class="card-panel" style="margin-bottom:18px;">
           <h3>Ringkasan pesanan</h3>
-          <div id="cartItemsList"></div>
-          <button class="btn btn-ghost btn-sm" style="margin-top:14px;" onclick="goToPage('wahana')">Tambah wahana lain</button>
+          <div id="orderLineList"></div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:14px;" onclick="goToPage('home')">Pilih wahana lain</button>
         </div>
 
         <div class="card-panel">
@@ -654,17 +625,6 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
 </section>
 
 </main>
-
-<!-- ============ CART BAR ============ -->
-<div id="cartBar">
-  <div class="cartbar-inner">
-    <div class="cartbar-info">
-      <b id="cartBarTotal">Rp 0</b>
-      <span id="cartBarCount">0 tiket dipilih</span>
-    </div>
-    <button class="btn btn-accent" onclick="goToPage('pembayaran')">Lanjut ke pembayaran</button>
-  </div>
-</div>
 
 <!-- ============ ADMIN (hidden route) ============ -->
 <div id="adminOverlay">
@@ -772,12 +732,17 @@ function icon(name, size, sw){
     headset: '<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="2" y="13" width="5" height="7" rx="2"/><rect x="17" y="13" width="5" height="7" rx="2"/>',
     mappin: '<path d="M12 22s7-7.5 7-12a7 7 0 0 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.3"/>',
     back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
-    trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>'
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    mirror: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 12h16M12 3v18" stroke-dasharray="2 3"/>',
+    tornado: '<path d="M4 6h16M6 10h12M8 14h8M10 18h4"/>',
+    carousel: '<path d="M12 3v18M4 8h16M4 16h16"/><circle cx="12" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M4 8 8 4M20 8l-4-4M4 16l4 4M20 16l-4 4"/>',
+    boat: '<path d="M3 15h18l-2 5H5l-2-5Z"/><path d="M12 3v12M7 8h10M7 12h10"/>',
+    seal: '<circle cx="12" cy="10" r="4"/><path d="M8 14c-2 2-3 5-3 7M16 14c2 2 3 5 3 7"/><circle cx="10.5" cy="9.5" r=".6" fill="currentColor" stroke="none"/><circle cx="13.5" cy="9.5" r=".6" fill="currentColor" stroke="none"/>'
   };
   return '<svg class="ic" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round">'+(p[name]||'')+'</svg>';
 }
 
-/* ================= DATA ================= */
+/* ================= DATA — 13 WAHANA ================= */
 const WAHANA = [
   {id:'ombak-raksasa', nama:'Ombak Raksasa', kategori:'Ekstrem', harga:85000, durasi:'3 mnt', tinggi:'140 cm', ic:'coaster', seed:'coaster-ride', desc:'Roller coaster tercepat di Samudra Land, menukik tajam menghadap laut lepas. Melewati tiga putaran penuh dengan kecepatan tinggi, cocok untuk pencari sensasi ekstrem.'},
   {id:'seluncur-naga', nama:'Seluncur Naga', kategori:'Air', harga:65000, durasi:'2 mnt', tinggi:'120 cm', ic:'wave', seed:'water-slide', desc:'Perosotan air sepanjang 80 meter dengan tikungan berliku menyerupai tubuh naga. Meluncur dari ketinggian menuju kolam penampungan yang segar.'},
@@ -786,7 +751,12 @@ const WAHANA = [
   {id:'kolam-ombak', nama:'Kolam Ombak Buatan', kategori:'Air', harga:50000, durasi:'Bebas', tinggi:'Semua usia', ic:'droplet', seed:'wave-pool', desc:'Kolam ombak buatan dengan gelombang yang dihasilkan setiap 15 menit sekali, memberi sensasi bermain ombak seperti di laut sungguhan.'},
   {id:'flying-fox', nama:'Flying Fox Camar', kategori:'Ekstrem', harga:70000, durasi:'1 mnt', tinggi:'135 cm', ic:'zipline', seed:'zipline-ride', desc:'Meluncur sejauh 250 meter di atas kanopi pantai dengan kecepatan angin laut yang menyegarkan.'},
   {id:'kereta-mini', nama:'Kereta Mini Pesisir', kategori:'Santai', harga:35000, durasi:'12 mnt', tinggi:'Semua usia', ic:'train', seed:'mini-train', desc:'Kereta wisata yang berkeliling seluruh area Samudra Land, melewati semua zona wahana sambil menikmati suasana pantai.'},
-  {id:'dunia-air-cilik', nama:'Dunia Air Cilik', kategori:'Anak', harga:40000, durasi:'Bebas', tinggi:'Maks 120 cm', ic:'droplet', seed:'kids-water', desc:'Area bermain air khusus anak dengan kedalaman aman dan berbagai wahana mini yang ramah untuk si kecil.'}
+  {id:'dunia-air-cilik', nama:'Dunia Air Cilik', kategori:'Anak', harga:40000, durasi:'Bebas', tinggi:'Maks 120 cm', ic:'droplet', seed:'kids-water', desc:'Area bermain air khusus anak dengan kedalaman aman dan berbagai wahana mini yang ramah untuk si kecil.'},
+  {id:'rumah-cermin', nama:'Rumah Kaca Cermin', kategori:'Santai', harga:30000, durasi:'5 mnt', tinggi:'Semua usia', ic:'mirror', seed:'mirror-house', desc:'Labirin cermin yang memantulkan cahaya ke segala arah. Menantang orientasi dan cocok untuk foto-foto unik bersama keluarga.'},
+  {id:'tornado-air', nama:'Tornado Air', kategori:'Air', harga:75000, durasi:'3 mnt', tinggi:'130 cm', ic:'tornado', seed:'tornado-slide', desc:'Perosotan berbentuk corong raksasa yang berputar sebelum menjatuhkan pengunjung ke kolam di bawahnya. Sensasi berputar tiada henti.'},
+  {id:'komidi-putar', nama:'Komidi Putar Bahari', kategori:'Anak', harga:25000, durasi:'6 mnt', tinggi:'Maks 130 cm', ic:'carousel', seed:'carousel-ride', desc:'Komidi putar klasik dengan tema makhluk laut — kuda laut, kura-kura, dan ikan warna-warni. Aman dan ceria untuk anak-anak.'},
+  {id:'bumper-boat', nama:'Bumper Boat', kategori:'Air', harga:45000, durasi:'5 mnt', tinggi:'110 cm', ic:'boat', seed:'bumper-boat', desc:'Perahu kecil yang bisa ditabrakkan satu sama lain di kolam dangkal. Seru untuk dimainkan bersama teman atau keluarga.'},
+  {id:'taman-lumba', nama:'Taman Lumba-Lumba', kategori:'Anak', harga:35000, durasi:'Bebas', tinggi:'Semua usia', ic:'seal', seed:'dolphin-park', desc:'Area interaktif dengan pertunjukan lumba-lumba mini, kolam sentuh, dan taman edukasi tentang kehidupan laut.'}
 ];
 const PAY_METHODS = [
   {id:'saldo', label:'Saldo Samudra', ic:'wallet'},
@@ -798,26 +768,23 @@ const PAY_METHODS = [
 const ADMIN_FEE = 5000;
 
 /* ================= STATE ================= */
-let cart = {};
+let activeCat = 'Semua';
 let selectedPayment = null;
 let currentOrder = null;
-let activeFilter = 'Semua';
 let chatHistory = [];
 let currentDetailId = null;
 let detailQty = 1;
-let saldo = 100000;                 /* Saldo awal */
+let saldo = 100000;
 let searchTimer = null;
+let pendingOrder = null;
 
 /* ================= HELPERS ================= */
 function formatRupiah(n){ return 'Rp ' + n.toLocaleString('id-ID'); }
-function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
-function cartTotal(){
-  return Object.entries(cart).reduce((sum,[id,qty])=>{
-    const w = WAHANA.find(x=>x.id===id);
-    return sum + (w ? w.harga*qty : 0);
-  },0);
-}
 function bgUrl(w){ return "url('https://picsum.photos/seed/"+w.seed+"/700/460')"; }
+function getCategories(){
+  const set = new Set(WAHANA.map(w=>w.kategori));
+  return ['Semua', ...set];
+}
 
 /* ================= SALDO ================= */
 function renderSaldo(){
@@ -829,32 +796,11 @@ function renderSaldo(){
 function goToPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  const navEl = document.querySelector('.nav-link[data-nav="'+id+'"]');
-  if(navEl) navEl.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='pembayaran') renderPaymentPage();
-  updateCartBarVisibility();
-}
-function handleCartNavClick(){
-  if(cartCount()===0){ goToPage('wahana'); } else { goToPage('pembayaran'); }
-}
-function updateCartBarVisibility(){
-  const bar = document.getElementById('cartBar');
-  const onWahana = document.getElementById('page-wahana').classList.contains('active');
-  const onDetail = document.getElementById('page-detail').classList.contains('active');
-  if(cartCount()>0 && (onWahana || onDetail)){ bar.classList.add('show'); }
-  else { bar.classList.remove('show'); }
-  document.getElementById('cartBarTotal').textContent = formatRupiah(cartTotal());
-  document.getElementById('cartBarCount').textContent = cartCount() + ' tiket dipilih';
-  const badge = document.getElementById('cartBadge');
-  if(badge){
-    if(cartCount()>0){ badge.classList.remove('hidden'); badge.textContent = cartCount(); }
-    else { badge.classList.add('hidden'); }
-  }
 }
 
-/* ================= SEARCH: langsung menuju wahana ================= */
+/* ================= SEARCH ================= */
 function findMatches(q){
   const s = q.toLowerCase();
   return WAHANA.filter(w =>
@@ -887,11 +833,8 @@ function onSearchInput(){
   const q = document.getElementById('searchInput').value.trim();
   clearTimeout(searchTimer);
   if(!q){ hideSuggestions(); return; }
-
   const matches = findMatches(q);
   renderSuggestions(matches);
-
-  /* Kalau hanya ada satu kemungkinan → otomatis menuju wahana itu */
   if(matches.length === 1){
     searchTimer = setTimeout(()=>{ pickSuggestion(matches[0].id); }, 750);
   }
@@ -912,25 +855,46 @@ function pickSuggestion(id){
   document.getElementById('searchInput').value = '';
   openDetail(id);
 }
-function setFilterAndGo(cat){
-  activeFilter = cat;
-  renderFilterChips();
+
+/* ================= CATEGORY CHIPS ================= */
+function renderCatBar(){
+  const cats = getCategories();
+  const bar = document.getElementById('catBar');
+  bar.innerHTML = cats.map(c=>{
+    const count = c === 'Semua' ? WAHANA.length : WAHANA.filter(w=>w.kategori===c).length;
+    const isActive = c === activeCat;
+    return `<button class="cat-chip ${isActive?'active':''}" onclick="setCategory('${c}')">
+      ${c}<span class="cat-count">${count}</span>
+    </button>`;
+  }).join('');
+}
+function setCategory(cat){
+  activeCat = cat;
+  renderCatBar();
   renderWahanaGrid();
-  goToPage('wahana');
+}
+function renderWahanaGrid(){
+  const list = activeCat === 'Semua'
+    ? WAHANA
+    : WAHANA.filter(w=>w.kategori===activeCat);
+  const grid = document.getElementById('wahanaGrid');
+  grid.innerHTML = list.length
+    ? list.map(wahanaCardHTML).join('')
+    : '<div class="empty-grid">Belum ada wahana di kategori ini.</div>';
+  document.getElementById('sectionTitle').textContent =
+    activeCat === 'Semua' ? 'Semua wahana' : 'Wahana · ' + activeCat;
+  document.getElementById('resultCount').textContent =
+    list.length + ' wahana';
 }
 
-/* ================= QUICK MENU (dipakai modal & chat) ================= */
-function goToMyTicket(){
-  if(currentOrder){ renderTicketPage(); goToPage('tiket'); }
-  else { goToPage('wahana'); }
-}
+/* ================= INFO MODAL ================= */
 function openInfoModal(){ document.getElementById('infoModalWrap').classList.add('show'); }
 function closeInfoModal(){ document.getElementById('infoModalWrap').classList.remove('show'); }
 
 /* ================= CARDS ================= */
 function wahanaCardHTML(w){
   return `
-  <article class="card">
+  <button class="card" onclick="openDetail('${w.id}')">
     <div class="card-media" style="background-image:${bgUrl(w)};">
       <span class="card-tag">${w.kategori}</span>
     </div>
@@ -943,26 +907,10 @@ function wahanaCardHTML(w){
       </div>
       <div class="card-foot">
         <div class="price">${formatRupiah(w.harga)}<small>per tiket</small></div>
-        <button class="btn btn-primary btn-sm" onclick="openDetail('${w.id}')">Beli Tiket</button>
+        <span class="card-cta">Lihat <span style="display:inline-flex;">${icon('arrow',13,2.2)}</span></span>
       </div>
     </div>
-  </article>`;
-}
-function renderHomeGrid(){
-  document.getElementById('homeWahanaGrid').innerHTML = WAHANA.slice(0,3).map(wahanaCardHTML).join('');
-  const air = WAHANA.filter(w=>w.kategori==='Air').slice(0,3);
-  document.getElementById('homeWaterGrid').innerHTML = air.map(wahanaCardHTML).join('');
-}
-function renderFilterChips(){
-  const cats = ['Semua', ...new Set(WAHANA.map(w=>w.kategori))];
-  document.getElementById('filterChips').innerHTML = cats.map(c=>
-    `<button class="chip ${c===activeFilter?'active':''}" onclick="setFilter('${c}')">${c}</button>`
-  ).join('');
-}
-function setFilter(c){ activeFilter = c; renderFilterChips(); renderWahanaGrid(); }
-function renderWahanaGrid(){
-  const list = activeFilter==='Semua' ? WAHANA : WAHANA.filter(w=>w.kategori===activeFilter);
-  document.getElementById('wahanaGrid').innerHTML = list.map(wahanaCardHTML).join('');
+  </button>`;
 }
 
 /* ================= DETAIL PAGE ================= */
@@ -996,14 +944,16 @@ function changeDetailQty(delta){
 }
 function buyFromDetail(){
   if(!currentDetailId) return;
-  cart[currentDetailId] = (cart[currentDetailId] || 0) + detailQty;
-  updateCartBarVisibility();
+  const w = WAHANA.find(x=>x.id===currentDetailId);
+  pendingOrder = { wahana: w, qty: detailQty, subtotal: w.harga*detailQty };
+  selectedPayment = null;
   goToPage('pembayaran');
 }
 
 /* ================= PAYMENT PAGE ================= */
 function renderPayMethods(){
-  const total = cartTotal() + ADMIN_FEE;
+  const subtotal = pendingOrder ? pendingOrder.subtotal : 0;
+  const total = subtotal + ADMIN_FEE;
   document.getElementById('payMethods').innerHTML = PAY_METHODS.map(m=>{
     const isSaldo = m.id === 'saldo';
     const disabled = isSaldo && total > saldo;
@@ -1016,65 +966,42 @@ function renderPayMethods(){
 }
 function selectPayment(id){ selectedPayment = id; renderPayMethods(); }
 
-function removeFromCart(id){
-  delete cart[id];
-  updateCartBarVisibility();
-  renderPaymentPage();
-}
-
 function renderPaymentPage(){
-  const empty = document.getElementById('payEmptyState');
-  const layout = document.getElementById('payLayout');
-  if(cartCount()===0){
-    empty.classList.remove('hidden'); layout.classList.add('hidden');
-    document.getElementById('icEmptyCart').innerHTML = icon('cart',26,1.8);
-    return;
-  }
-  empty.classList.add('hidden'); layout.classList.remove('hidden');
+  if(!pendingOrder){ goToPage('home'); return; }
+  const w = pendingOrder.wahana;
+  const total = pendingOrder.subtotal + ADMIN_FEE;
 
-  /* pilih otomatis saldo kalau cukup */
   if(!selectedPayment){
-    selectedPayment = (saldo >= cartTotal()+ADMIN_FEE) ? 'saldo' : 'qris';
+    selectedPayment = (saldo >= total) ? 'saldo' : 'qris';
   }
   renderPayMethods();
 
-  const items = Object.entries(cart).map(([id,qty])=>{
-    const w = WAHANA.find(x=>x.id===id);
-    return {w, qty, subtotal: w.harga*qty};
-  });
-
-  document.getElementById('cartItemsList').innerHTML = items.map(it=>`
-    <div class="cart-item-row">
-      <div class="cart-item-media" style="background-image:${bgUrl(it.w)};"></div>
-      <div class="cart-item-info">
-        <b>${it.w.nama}</b>
-        <span>${it.qty} tiket × ${formatRupiah(it.w.harga)}</span>
+  document.getElementById('orderLineList').innerHTML = `
+    <div class="order-line">
+      <div class="thumb" style="background-image:${bgUrl(w)}"></div>
+      <div class="info">
+        <b>${w.nama}</b>
+        <span>${pendingOrder.qty} tiket × ${formatRupiah(w.harga)}</span>
       </div>
-      <div class="cart-item-right">
-        <span class="amt">${formatRupiah(it.subtotal)}</span>
-        <button class="cart-item-remove" onclick="removeFromCart('${it.w.id}')">${icon('trash',17,1.8)}</button>
-      </div>
-    </div>
-  `).join('');
+      <div class="amt">${formatRupiah(pendingOrder.subtotal)}</div>
+    </div>`;
 
-  document.getElementById('notaItems').innerHTML = items.map(it=>
-    `<div class="nota-row"><span>${it.w.nama} × ${it.qty}</span><span>${formatRupiah(it.subtotal)}</span></div>`
-  ).join('');
-  const total = cartTotal() + ADMIN_FEE;
+  document.getElementById('notaItems').innerHTML =
+    `<div class="nota-row"><span>${w.nama} × ${pendingOrder.qty}</span><span>${formatRupiah(pendingOrder.subtotal)}</span></div>`;
   document.getElementById('notaFee').textContent = formatRupiah(ADMIN_FEE);
   document.getElementById('notaTotal').textContent = formatRupiah(total);
   document.getElementById('notaDate').textContent = new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
 }
 
 async function handleBayar(){
-  if(cartCount()===0) return;
+  if(!pendingOrder) return;
   const nama = document.getElementById('inpNama').value.trim();
   const hp = document.getElementById('inpHp').value.trim();
   const errEl = document.getElementById('payError');
   if(!nama || !hp){ errEl.textContent = 'Nama dan nomor HP wajib diisi.'; errEl.style.display='block'; return; }
   if(!selectedPayment){ errEl.textContent = 'Pilih metode pembayaran terlebih dahulu.'; errEl.style.display='block'; return; }
 
-  const total = cartTotal() + ADMIN_FEE;
+  const total = pendingOrder.subtotal + ADMIN_FEE;
   if(selectedPayment === 'saldo' && total > saldo){
     errEl.textContent = 'Saldo kamu tidak cukup. Pilih metode pembayaran lain.';
     errEl.style.display='block'; return;
@@ -1086,10 +1013,11 @@ async function handleBayar(){
   await new Promise(r=>setTimeout(r,900));
 
   const id = 'SBL' + Date.now().toString().slice(-8);
-  const items = Object.entries(cart).map(([wid,qty])=>{
-    const w = WAHANA.find(x=>x.id===wid);
-    return {wahanaId:w.id, nama:w.nama, harga:w.harga, qty, subtotal:w.harga*qty};
-  });
+  const w = pendingOrder.wahana;
+  const items = [{
+    wahanaId: w.id, nama: w.nama, harga: w.harga,
+    qty: pendingOrder.qty, subtotal: pendingOrder.subtotal
+  }];
 
   currentOrder = {
     id, nama, hp,
@@ -1098,7 +1026,6 @@ async function handleBayar(){
     waktu: new Date().toISOString()
   };
 
-  /* potong saldo kalau bayar pakai saldo */
   if(selectedPayment === 'saldo'){
     saldo = Math.max(0, saldo - total);
     renderSaldo();
@@ -1106,10 +1033,9 @@ async function handleBayar(){
 
   await saveOrder(currentOrder);
 
-  cart = {};
+  pendingOrder = null;
   selectedPayment = null;
   btn.disabled = false; btn.textContent = 'Bayar sekarang';
-  updateCartBarVisibility();
   renderTicketPage();
   goToPage('tiket');
 }
@@ -1190,7 +1116,7 @@ function renderTicketPage(){
 }
 function resetOrderFlow(){
   currentOrder = null;
-  goToPage('wahana');
+  goToPage('home');
 }
 
 /* ================= ADMIN (hidden) ================= */
@@ -1247,7 +1173,7 @@ const SYSTEM_PROMPT = `Kamu adalah "Kak Sam", customer service AI untuk taman wa
 Daftar wahana & harga (per tiket):
 ${WAHANA.map(w=>`- ${w.nama} (${w.kategori}): ${formatRupiah(w.harga)}, durasi ${w.durasi}, syarat tinggi ${w.tinggi}. ${w.desc}`).join('\n')}
 Biaya admin pembayaran: Rp 5.000. Metode pembayaran: Saldo Samudra, QRIS, Transfer Bank, Kartu Debit/Kredit, E-Wallet.
-Cara pesan: di daftar wahana tekan "Beli Tiket" untuk membuka halaman detail wahana, atur jumlah tiket, tekan "Beli", lalu isi nama & nomor HP dan pilih metode bayar di halaman pembayaran. Tiket dengan QR langsung terbit setelah bayar.
+Cara pesan: klik kartu wahana di beranda untuk membuka halaman rincian, atur jumlah tiket, tekan "Lanjut ke pembayaran", isi nama & nomor HP, pilih metode bayar, lalu tiket dengan QR langsung terbit.
 Jawab singkat, ramah, dan dalam Bahasa Indonesia. Situs ini tidak memakai sistem login/akun dan tidak meminta email, jangan mengarang fitur tersebut. Jika ditanya di luar topik taman wahana, arahkan kembali dengan sopan.`;
 
 function toggleChat(forceOpen){
@@ -1300,9 +1226,8 @@ async function sendChat(){
 /* ================= INIT ================= */
 function init(){
   document.getElementById('brandIcon').innerHTML = icon('wave',16,2);
-  document.getElementById('icSearch').innerHTML = icon('search',17,1.8);
+  document.getElementById('icSearch').innerHTML = icon('search',18,1.8);
   document.getElementById('icSearchBtn').innerHTML = icon('search',15,2);
-  document.getElementById('navCartBtn').innerHTML = icon('cart',16,2) + ' Keranjang <span class="cart-badge hidden" id="cartBadge">0</span>';
   document.getElementById('icBack').innerHTML = icon('back',15,2);
   document.getElementById('icModalClose').innerHTML = icon('close',18,1.8);
   document.getElementById('icInfoPin').innerHTML = icon('mappin',17,1.8);
@@ -1311,17 +1236,13 @@ function init(){
   document.getElementById('chatBubble').innerHTML = icon('chat',21,1.8);
   document.getElementById('chatSendBtn').innerHTML = icon('send',15,1.8);
 
-  /* hero background */
   document.getElementById('heroBg').style.backgroundImage =
     "url('https://picsum.photos/seed/samudra-hero/1600/900')";
 
   renderSaldo();
-  renderHomeGrid();
-  renderFilterChips();
+  renderCatBar();
   renderWahanaGrid();
-  updateCartBarVisibility();
 
-  /* tutup suggestion kalau klik di luar */
   document.addEventListener('click', function(e){
     const wrap = document.querySelector('.search-wrap');
     if(wrap && !wrap.contains(e.target)) hideSuggestions();
