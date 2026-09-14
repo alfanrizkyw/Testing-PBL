@@ -196,6 +196,11 @@ input{font-family:inherit;}
 .fav-section .result-count{
   background:rgba(255,255,255,.7);border-color:#F0DDB4;color:#8A5B12;
 }
+.fav-hint{
+  display:none;align-items:center;gap:6px;
+  font-size:11.5px;font-weight:700;color:#8A5B12;opacity:.75;
+  margin-top:10px;
+}
 
 /* ================= CATEGORY CHIPS ================= */
 .cat-bar{
@@ -491,7 +496,29 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
   .hero{height:290px;border-radius:16px;}
   .hero-content{padding:22px;}
   .search-wrap{margin-top:26px;}
-  .fav-section{padding:18px 16px 20px;}
+
+  /* Favorit jadi scroll horizontal */
+  .fav-section{padding:18px 0 20px;}
+  .fav-section .section-label{padding:0 18px;}
+  .fav-hint{display:flex;padding:0 18px;}
+  #favoritGrid{
+    display:flex !important;
+    grid-template-columns:none;
+    gap:12px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    padding:4px 18px 10px;
+    scrollbar-width:none;
+  }
+  #favoritGrid::-webkit-scrollbar{display:none;}
+  #favoritGrid .card{
+    flex:0 0 74%;
+    max-width:260px;
+    scroll-snap-align:start;
+  }
+
   .cat-bar{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
   .cat-bar::-webkit-scrollbar{display:none;}
   .wahana-grid,.pay-methods{grid-template-columns:1fr;}
@@ -549,13 +576,16 @@ footer .fbrand{color:var(--blue-deep);font-family:'Fraunces',serif;font-size:15p
       <div class="suggest" id="searchSuggest"></div>
     </div>
 
-    <!-- FAVORIT (3 pilihan) -->
+    <!-- FAVORIT (6 pilihan, scroll horizontal di HP) -->
     <div class="fav-section" id="favoritSection">
       <div class="section-label">
         <h2><span id="icStar"></span> Wahana favorit</h2>
-        <span class="result-count">Pilihan pengunjung</span>
+        <span class="result-count" id="favCount">6 pilihan</span>
       </div>
       <div class="wahana-grid" id="favoritGrid"></div>
+      <div class="fav-hint" id="favHint">
+        <span id="icSwipe"></span> Geser untuk melihat lainnya
+      </div>
     </div>
 
     <!-- CATEGORY CHIPS -->
@@ -770,6 +800,7 @@ function icon(name, size, sw){
     back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
     arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
     star: '<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8L12 3.5Z" fill="currentColor" stroke="none"/>',
+    swipe: '<path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
     mirror: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 12h16M12 3v18" stroke-dasharray="2 3"/>',
     tornado: '<path d="M4 6h16M6 10h12M8 14h8M10 18h4"/>',
     carousel: '<path d="M12 3v18M4 8h16M4 16h16"/><circle cx="12" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M4 8 8 4M20 8l-4-4M4 16l4 4M20 16l-4 4"/>',
@@ -779,18 +810,18 @@ function icon(name, size, sw){
   return '<svg class="ic" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round">'+(p[name]||'')+'</svg>';
 }
 
-/* ================= DATA — 13 WAHANA ================= */
+/* ================= DATA — 13 WAHANA, 6 FAVORIT ================= */
 const WAHANA = [
   {id:'ombak-raksasa', nama:'Ombak Raksasa', kategori:'Ekstrem', harga:85000, durasi:'3 mnt', tinggi:'140 cm', ic:'coaster', seed:'coaster-ride', favorit:true, desc:'Roller coaster tercepat di Samudra Land, menukik tajam menghadap laut lepas. Melewati tiga putaran penuh dengan kecepatan tinggi, cocok untuk pencari sensasi ekstrem.'},
-  {id:'seluncur-naga', nama:'Seluncur Naga', kategori:'Air', harga:65000, durasi:'2 mnt', tinggi:'120 cm', ic:'wave', seed:'water-slide', desc:'Perosotan air sepanjang 80 meter dengan tikungan berliku menyerupai tubuh naga. Meluncur dari ketinggian menuju kolam penampungan yang segar.'},
+  {id:'seluncur-naga', nama:'Seluncur Naga', kategori:'Air', harga:65000, durasi:'2 mnt', tinggi:'120 cm', ic:'wave', seed:'water-slide', favorit:true, desc:'Perosotan air sepanjang 80 meter dengan tikungan berliku menyerupai tubuh naga. Meluncur dari ketinggian menuju kolam penampungan yang segar.'},
   {id:'bianglala', nama:'Bianglala Cakrawala', kategori:'Santai', harga:45000, durasi:'8 mnt', tinggi:'Semua usia', ic:'ferris', seed:'ferris-wheel', favorit:true, desc:'Kincir raksasa dengan kabin tertutup, menawarkan pemandangan pantai dan seluruh area taman dari ketinggian 40 meter. Cocok untuk keluarga.'},
   {id:'kapal-karam', nama:'Kapal Karam', kategori:'Ekstrem', harga:55000, durasi:'10 mnt', tinggi:'130 cm', ic:'ghost', seed:'ghost-house', desc:'Rumah hantu bertema kapal karam, menyusuri lorong gelap di bawah dermaga dengan efek suara dan visual yang mendebarkan.'},
   {id:'kolam-ombak', nama:'Kolam Ombak Buatan', kategori:'Air', harga:50000, durasi:'Bebas', tinggi:'Semua usia', ic:'droplet', seed:'wave-pool', favorit:true, desc:'Kolam ombak buatan dengan gelombang yang dihasilkan setiap 15 menit sekali, memberi sensasi bermain ombak seperti di laut sungguhan.'},
-  {id:'flying-fox', nama:'Flying Fox Camar', kategori:'Ekstrem', harga:70000, durasi:'1 mnt', tinggi:'135 cm', ic:'zipline', seed:'zipline-ride', desc:'Meluncur sejauh 250 meter di atas kanopi pantai dengan kecepatan angin laut yang menyegarkan.'},
+  {id:'flying-fox', nama:'Flying Fox Camar', kategori:'Ekstrem', harga:70000, durasi:'1 mnt', tinggi:'135 cm', ic:'zipline', seed:'zipline-ride', favorit:true, desc:'Meluncur sejauh 250 meter di atas kanopi pantai dengan kecepatan angin laut yang menyegarkan.'},
   {id:'kereta-mini', nama:'Kereta Mini Pesisir', kategori:'Santai', harga:35000, durasi:'12 mnt', tinggi:'Semua usia', ic:'train', seed:'mini-train', desc:'Kereta wisata yang berkeliling seluruh area Samudra Land, melewati semua zona wahana sambil menikmati suasana pantai.'},
   {id:'dunia-air-cilik', nama:'Dunia Air Cilik', kategori:'Anak', harga:40000, durasi:'Bebas', tinggi:'Maks 120 cm', ic:'droplet', seed:'kids-water', desc:'Area bermain air khusus anak dengan kedalaman aman dan berbagai wahana mini yang ramah untuk si kecil.'},
   {id:'rumah-cermin', nama:'Rumah Kaca Cermin', kategori:'Santai', harga:30000, durasi:'5 mnt', tinggi:'Semua usia', ic:'mirror', seed:'mirror-house', desc:'Labirin cermin yang memantulkan cahaya ke segala arah. Menantang orientasi dan cocok untuk foto-foto unik bersama keluarga.'},
-  {id:'tornado-air', nama:'Tornado Air', kategori:'Air', harga:75000, durasi:'3 mnt', tinggi:'130 cm', ic:'tornado', seed:'tornado-slide', desc:'Perosotan berbentuk corong raksasa yang berputar sebelum menjatuhkan pengunjung ke kolam di bawahnya. Sensasi berputar tiada henti.'},
+  {id:'tornado-air', nama:'Tornado Air', kategori:'Air', harga:75000, durasi:'3 mnt', tinggi:'130 cm', ic:'tornado', seed:'tornado-slide', favorit:true, desc:'Perosotan berbentuk corong raksasa yang berputar sebelum menjatuhkan pengunjung ke kolam di bawahnya. Sensasi berputar tiada henti.'},
   {id:'komidi-putar', nama:'Komidi Putar Bahari', kategori:'Anak', harga:25000, durasi:'6 mnt', tinggi:'Maks 130 cm', ic:'carousel', seed:'carousel-ride', desc:'Komidi putar klasik dengan tema makhluk laut — kuda laut, kura-kura, dan ikan warna-warni. Aman dan ceria untuk anak-anak.'},
   {id:'bumper-boat', nama:'Bumper Boat', kategori:'Air', harga:45000, durasi:'5 mnt', tinggi:'110 cm', ic:'boat', seed:'bumper-boat', desc:'Perahu kecil yang bisa ditabrakkan satu sama lain di kolam dangkal. Seru untuk dimainkan bersama teman atau keluarga.'},
   {id:'taman-lumba', nama:'Taman Lumba-Lumba', kategori:'Anak', harga:35000, durasi:'Bebas', tinggi:'Semua usia', ic:'seal', seed:'dolphin-park', desc:'Area interaktif dengan pertunjukan lumba-lumba mini, kolam sentuh, dan taman edukasi tentang kehidupan laut.'}
@@ -822,6 +853,7 @@ function getCategories(){
   const set = new Set(WAHANA.map(w=>w.kategori));
   return ['Semua', 'Favorit', ...set];
 }
+function favoriteList(){ return WAHANA.filter(w=>w.favorit); }
 
 /* ================= SALDO ================= */
 function renderSaldo(){
@@ -900,7 +932,7 @@ function renderCatBar(){
   bar.innerHTML = cats.map(c=>{
     let count;
     if(c === 'Semua') count = WAHANA.length;
-    else if(c === 'Favorit') count = WAHANA.filter(w=>w.favorit).length;
+    else if(c === 'Favorit') count = favoriteList().length;
     else count = WAHANA.filter(w=>w.kategori===c).length;
     const isActive = c === activeCat;
     return `<button class="cat-chip ${isActive?'active':''}" onclick="setCategory('${c}')">
@@ -911,15 +943,14 @@ function renderCatBar(){
 function setCategory(cat){
   activeCat = cat;
   renderCatBar();
-  /* Sembunyikan section favorit kalau user pilih kategori spesifik,
-     supaya grid di bawah tidak dobel */
+  /* Section favorit hanya tampil saat kategori = Semua */
   document.getElementById('favoritSection').classList.toggle('hidden', cat !== 'Semua');
   renderWahanaGrid();
 }
 function renderWahanaGrid(){
   let list;
   if(activeCat === 'Semua') list = WAHANA;
-  else if(activeCat === 'Favorit') list = WAHANA.filter(w=>w.favorit);
+  else if(activeCat === 'Favorit') list = favoriteList();
   else list = WAHANA.filter(w=>w.kategori===activeCat);
 
   const grid = document.getElementById('wahanaGrid');
@@ -935,24 +966,27 @@ function renderWahanaGrid(){
   document.getElementById('resultCount').textContent = list.length + ' wahana';
 }
 
-/* ================= FAVORIT GRID (3 pilihan) ================= */
+/* ================= FAVORIT GRID (6 pilihan) ================= */
 function renderFavoritGrid(){
-  const favs = WAHANA.filter(w=>w.favorit).slice(0,3);
-  document.getElementById('favoritGrid').innerHTML =
-    favs.map(w => wahanaCardHTML(w, true)).join('');
+  const favs = favoriteList();
+  document.getElementById('favoritGrid').innerHTML = favs.map(wahanaCardHTML).join('');
+  document.getElementById('favCount').textContent = favs.length + ' pilihan';
 }
 
 /* ================= INFO MODAL ================= */
 function openInfoModal(){ document.getElementById('infoModalWrap').classList.add('show'); }
 function closeInfoModal(){ document.getElementById('infoModalWrap').classList.remove('show'); }
 
-/* ================= CARDS ================= */
-function wahanaCardHTML(w, showStar){
+/* ================= CARDS — star otomatis jika favorit ================= */
+function wahanaCardHTML(w){
+  const star = w.favorit
+    ? '<span class="card-star" title="Wahana favorit">'+icon('star',13,0)+'</span>'
+    : '';
   return `
   <button class="card" onclick="openDetail('${w.id}')">
     <div class="card-media" style="background-image:${bgUrl(w)};">
       <span class="card-tag">${w.kategori}</span>
-      ${showStar ? '<span class="card-star">'+icon('star',13,0)+'</span>' : ''}
+      ${star}
     </div>
     <div class="card-body">
       <h3>${w.nama}</h3>
@@ -1292,6 +1326,7 @@ function init(){
   document.getElementById('chatBubble').innerHTML = icon('chat',21,1.8);
   document.getElementById('chatSendBtn').innerHTML = icon('send',15,1.8);
   document.getElementById('icStar').innerHTML = icon('star',18,0);
+  document.getElementById('icSwipe').innerHTML = icon('swipe',14,2);
 
   document.getElementById('heroBg').style.backgroundImage =
     "url('https://picsum.photos/seed/samudra-hero/1600/900')";
