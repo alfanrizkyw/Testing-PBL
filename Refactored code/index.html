@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samudra Land — Pesan Tiket Wahana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style2.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="brand" onclick="goToPage('home')">
+      <div class="brand-mark" id="brandIcon"><i data-lucide="waves" class="ic"></i></div>
+      <div class="brand-name">Samudra Land</div>
+    </div>
+    <div class="nav-right">
+      <div class="saldo-chip" id="saldoChip" title="Saldo Samudra"></div>
+      <button class="nav-topup" onclick="openTopup('home')">
+        <i data-lucide="plus" class="ic"></i> Isi Ulang
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="page active" id="page-home">
+  <div class="container page-pad">
+
+    <div class="hero">
+      <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class="hero-tag">Pantai Kertajaya · Surabaya</span>
+          <h1 class="hero-title">Welcome to <span class="grad">Samudra Land</span></h1>
+          <p class="hero-sub">Satu tiket untuk sehari penuh keseruan. Pilih wahana, bayar pakai saldo, tiket QR langsung terbit.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <div class="search-bar">
+        <i data-lucide="search" class="ic"></i>
+        <input id="searchInput" type="text" autocomplete="off"
+               placeholder="Cari wahana — ketik namanya, langsung menuju ke sana..."
+               oninput="onSearchInput()" onkeydown="onSearchKey(event)">
+        <button class="search-go" onclick="submitSearch()" id="icSearchBtn"><i data-lucide="search" class="ic"></i></button>
+      </div>
+      <div class="suggest" id="searchSuggest"></div>
+    </div>
+
+    <div class="fav-section" id="favoritSection">
+      <div class="section-label">
+        <h2><i data-lucide="star" class="ic"></i> Wahana favorit</h2>
+        <span class="result-count" id="favCount">6 pilihan</span>
+      </div>
+      <div class="wahana-grid" id="favoritGrid"></div>
+      <div class="fav-hint" id="favHint">
+        <i data-lucide="move-horizontal" class="ic"></i> Geser untuk melihat lainnya
+      </div>
+    </div>
+
+    <div class="cat-bar" id="catBar"></div>
+
+    <div class="section-label">
+      <h2 id="sectionTitle">Semua wahana</h2>
+      <span class="result-count" id="resultCount">13 wahana</span>
+    </div>
+    <div class="wahana-grid" id="wahanaGrid"></div>
+
+  </div>
+</section>
+
+<!-- ============ WAHANA DETAIL ============ -->
+<section class="page" id="page-detail">
+  <div class="container page-pad">
+    <a href="#" class="detail-back" onclick="goToPage('home');return false;"><i data-lucide="arrow-left" class="ic"></i> Kembali ke beranda</a>
+    <div class="detail-layout">
+      <div class="detail-media" id="detailMedia">
+        <span class="detail-media-tag" id="detailTag"></span>
+        <h1 class="detail-media-title" id="detailTitle"></h1>
+      </div>
+      <div class="detail-info">
+        <div class="detail-meta-row" id="detailMetaRow"></div>
+        <p class="detail-desc" id="detailDesc"></p>
+        <div class="detail-price-box">
+          <div class="detail-price-row">
+            <div>
+              <span style="font-size:12px;color:var(--ink-soft);font-weight:600;">Harga per tiket</span>
+              <div class="price" id="detailPrice"></div>
+            </div>
+            <div class="stepper">
+              <button onclick="changeDetailQty(-1)">−</button>
+              <span id="detailQtyLabel">1</span>
+              <button onclick="changeDetailQty(1)">+</button>
+            </div>
+          </div>
+          <div class="detail-subtotal"><span>Subtotal</span><b id="detailSubtotal">Rp 0</b></div>
+          <button class="btn btn-primary btn-block" onclick="buyFromDetail()">Lanjut ke pembayaran</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PEMBAYARAN ============ -->
+<section class="page" id="page-pembayaran">
+  <div class="container page-pad">
+    <div class="section-label" style="margin-top:0;"><h2>Pembayaran</h2></div>
+
+    <div class="pay-layout" id="payLayout">
+      <div>
+        <div class="card-panel" style="margin-bottom:18px;">
+          <h3>Ringkasan pesanan</h3>
+          <div id="orderLineList"></div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:14px;" onclick="goToPage('home')">Pilih wahana lain</button>
+        </div>
+
+        <div class="card-panel">
+          <h3>Data pemesan</h3>
+          <div class="field"><label>Nama lengkap</label><input id="inpNama" type="text" placeholder="cth. Raka Pratama"></div>
+          <div class="field"><label>Nomor HP</label><input id="inpHp" type="tel" placeholder="08xx xxxx xxxx"></div>
+
+          <h3 style="margin-top:6px;">Metode pembayaran</h3>
+          <div class="pay-single">
+            <div class="pay-single-left">
+              <div class="pay-single-icon" id="icPayWallet"><i data-lucide="wallet" class="ic"></i></div>
+              <div>
+                <b>Saldo Samudra</b>
+                <span id="paySaldoLine">Saldo kamu: Rp 100.000</span>
+              </div>
+            </div>
+            <span class="pay-single-badge">Otomatis</span>
+          </div>
+          <p id="paySaldoWarn" class="pay-warn hidden">
+            Saldo tidak cukup. <a onclick="openTopup('pembayaran')">Isi ulang sekarang →</a>
+          </p>
+
+          <button class="btn btn-primary btn-block" style="margin-top:20px;" id="btnBayar" onclick="handleBayar()">Bayar sekarang</button>
+          <p id="payError" style="color:var(--danger);font-size:13px;margin-top:10px;display:none;"></p>
+        </div>
+      </div>
+
+      <div class="nota" id="notaPanel">
+        <div class="nota-head">
+          <div><h4>Nota Pemesanan</h4><span id="notaId">Draf pemesanan</span></div>
+          <span id="notaDate">—</span>
+        </div>
+        <div id="notaItems"></div>
+        <div class="nota-row sub"><span>Biaya admin</span><span id="notaFee">Rp 5.000</span></div>
+        <div class="nota-total"><span>Total</span><span id="notaTotal">Rp 0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOP UP ============ -->
+<section class="page" id="page-topup">
+  <div class="container page-pad">
+    <div class="topup-wrap">
+      <a href="#" class="detail-back" onclick="goToPage(topupReturnTo);return false;"><i data-lucide="arrow-left" class="ic"></i> Kembali</a>
+
+      <div class="topup-card">
+        <div class="topup-balance">
+          <div>
+            <span class="lbl">Saldo saat ini</span>
+            <b id="topupCurrentSaldo">Rp 100.000</b>
+          </div>
+          <div class="ti" id="icTopupWallet"><i data-lucide="plus" class="ic"></i></div>
+        </div>
+
+        <h3><span class="topup-step">1</span> Pilih nominal isi ulang</h3>
+        <div class="topup-presets" id="topupPresets"></div>
+
+        <div class="field">
+          <label>Atau masukkan nominal lain</label>
+          <input id="topupCustom" type="text" inputmode="numeric"
+                 placeholder="cth. 150.000" oninput="onTopupInput()" autocomplete="off">
+        </div>
+
+        <h3 style="margin-top:8px;"><span class="topup-step">2</span> Pilih metode pembayaran</h3>
+        <div class="topup-methods" id="topupMethods"></div>
+
+        <div class="topup-summary">
+          <div class="nota-row sub"><span>Saldo saat ini</span><span id="topupOld">Rp 100.000</span></div>
+          <div class="nota-row sub"><span>Jumlah isi ulang</span><span id="topupAdd">Rp 0</span></div>
+          <div class="nota-row sub"><span>Metode</span><span class="topup-method-inline" id="topupMethodLabel">—</span></div>
+          <div class="nota-total"><span>Saldo setelah isi ulang</span><span id="topupNew">Rp 100.000</span></div>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="btnTopup" onclick="handleTopup()">Bayar &amp; Isi Ulang</button>
+        <p id="topupError" style="color:var(--danger);font-size:13px;margin-top:10px;display:none;"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIKET ============ -->
+<section class="page" id="page-tiket">
+  <div class="container page-pad">
+    <div class="section-label" style="margin-top:0;"><h2>Tiket kamu sudah terbit</h2></div>
+    <p style="margin-bottom:20px;">Tunjukkan kode QR ini di pintu masuk tiap wahana.</p>
+    <div class="tabs">
+      <button class="tab-btn active" id="tabTiketBtn" onclick="switchTicketTab('tiket')">Tiket</button>
+      <button class="tab-btn" id="tabNotaBtn" onclick="switchTicketTab('nota')">Nota</button>
+    </div>
+    <div id="ticketList"></div>
+    <div id="notaFinal" class="nota hidden" style="max-width:440px;"></div>
+    <div class="no-print" style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="window.print()">Cetak tiket</button>
+      <button class="btn btn-ghost" onclick="resetOrderFlow()">Pesan tiket lagi</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ ADMIN ============ -->
+<div id="adminOverlay">
+  <div class="admin-top">
+    <div class="container">
+      <div>
+        <h2>Dashboard Admin</h2>
+        <span>Laporan penjualan tiket per wahana — Samudra Land</span>
+      </div>
+      <button class="btn btn-ghost on-dark" onclick="closeAdmin()">Tutup</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <div class="container">
+      <div class="stat-row" id="adminStats"></div>
+      <div class="admin-grid">
+        <div class="card-panel">
+          <h3>Tiket terjual per wahana</h3>
+          <div id="adminBars"></div>
+        </div>
+        <div class="card-panel">
+          <h3>Transaksi terbaru</h3>
+          <table>
+            <thead><tr><th>ID</th><th>Pemesan</th><th>Total</th></tr></thead>
+            <tbody id="adminOrdersTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ INFO MODAL ============ -->
+<div id="infoModalWrap">
+  <div class="modal-backdrop" onclick="closeInfoModal()"></div>
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeInfoModal()" id="icModalClose"><i data-lucide="x" class="ic"></i></button>
+    <h3>Info Samudra Land</h3>
+    <div class="modal-row">
+      <div class="qi-icon" id="icInfoPin"><i data-lucide="map-pin" class="ic"></i></div>
+      <div><b>Lokasi</b><span>Pantai Kertajaya, Surabaya</span></div>
+    </div>
+    <div class="modal-row">
+      <div class="qi-icon" id="icInfoClock"><i data-lucide="clock" class="ic"></i></div>
+      <div><b>Jam operasional</b><span>Setiap hari, 08.00 – 18.00</span></div>
+    </div>
+    <div class="modal-row">
+      <div class="qi-icon" id="icInfoHeadset"><i data-lucide="headset" class="ic"></i></div>
+      <div><b>Butuh bantuan?</b><span>Hubungi staf customer service di lokasi</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="fbrand">Samudra Land</div>
+    <p style="max-width:280px;font-size:12px;">Pantai Kertajaya, Surabaya · Buka 08.00–18.00 setiap hari</p>
+    <span id="secretTrigger" onclick="secretClick()">© 2026 Samudra Land</span>
+  </div>
+</footer>
+
+<!-- ============ TOAST ============ -->
+<div id="toast"><span class="ti" id="toastIcon"><i data-lucide="check" class="ic"></i></span><span id="toastText">Saldo berhasil diisi</span></div>
+
+<script src="script2.js"></script>
+</body>
+</html>
