@@ -146,6 +146,7 @@ const appState = {
   currentOrder: null,
   topupAmount: 0,
   topupMethod: 'qris',
+  topupCode: '',
   topupReturnTo: 'home',
   topupBusy: false,
   searchTimer: null,
@@ -737,9 +738,16 @@ async function handleBayar() {
    TOP-UP BALANCE FLOW
    ========================================================================== */
 
+function generateTopupCode() {
+  const randChars = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const randDigits = Math.floor(1000 + Math.random() * 9000);
+  return `SL-TOPUP-${randChars}-${randDigits}`;
+}
+
 function openTopup(returnTo = 'home') {
   appState.topupReturnTo = returnTo;
   appState.topupAmount = 0;
+  appState.topupCode = generateTopupCode();
   const customInput = document.getElementById('topupCustom');
   if (customInput) customInput.value = '';
   goToPage('topup');
@@ -753,8 +761,12 @@ function renderTopupPage() {
   if (currentSaldoEl) currentSaldoEl.textContent = formatRupiah(appState.saldo);
   if (oldSaldoEl) oldSaldoEl.textContent = formatRupiah(appState.saldo);
 
+  if (!appState.topupCode) {
+    appState.topupCode = generateTopupCode();
+  }
+
   renderTopupPresets();
-  renderTopupMethods();
+  renderTopupQr();
   updateTopupSummary();
 
   if (errorEl) errorEl.style.display = 'none';
@@ -777,6 +789,7 @@ function pickTopupPreset(amount) {
   if (customInput) customInput.value = amount.toLocaleString('id-ID');
 
   renderTopupPresets();
+  renderTopupQr();
   updateTopupSummary();
 }
 
@@ -789,35 +802,39 @@ function onTopupInput() {
   appState.topupAmount = rawDigits;
 
   renderTopupPresets();
+  renderTopupQr();
   updateTopupSummary();
 }
 
-function renderTopupMethods() {
-  const box = document.getElementById('topupMethods');
-  if (!box) return;
+function renderTopupQr() {
+  const qrImg = document.getElementById('topupQrImg');
+  const qrCodeText = document.getElementById('topupQrCode');
 
-  box.innerHTML = TOPUP_METHODS.map(method => `
-    <button class="topup-method ${appState.topupMethod === method.id ? 'selected' : ''}" type="button" onclick="pickTopupMethod('${escapeHTML(method.id)}')">
-      <div class="tmi">${icon(method.ic, 18, 1.8)}</div>
-      <div class="tmb">
-        <b>${escapeHTML(method.label)}</b>
-        <span>${escapeHTML(method.desc)}</span>
-      </div>
-    </button>
-  `).join('');
-
-  const selectedMethod = TOPUP_METHODS.find(m => m.id === appState.topupMethod);
-  const methodLabelEl = document.getElementById('topupMethodLabel');
-  if (methodLabelEl) {
-    methodLabelEl.innerHTML = selectedMethod
-      ? `${icon(selectedMethod.ic, 14, 2)} ${escapeHTML(selectedMethod.label)}`
-      : '—';
+  if (!appState.topupCode) {
+    appState.topupCode = generateTopupCode();
   }
+
+  if (qrCodeText) {
+    qrCodeText.textContent = appState.topupCode;
+  }
+
+  if (qrImg) {
+    const qrData = `SAMUDRA:TOPUP:${appState.topupCode}:AMT:${appState.topupAmount || 0}`;
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=0&data=${encodeURIComponent(qrData)}`;
+  }
+
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
+function renderTopupMethods() {
+  /* Retained for backward compatibility if called */
+  renderTopupQr();
 }
 
 function pickTopupMethod(methodId) {
   appState.topupMethod = methodId;
-  renderTopupMethods();
 }
 
 function updateTopupSummary() {
@@ -841,24 +858,14 @@ async function handleTopup() {
     return;
   }
 
-  if (!appState.topupMethod) {
-    if (errEl) {
-      errEl.textContent = 'Pilih metode pembayaran dulu ya.';
-      errEl.style.display = 'block';
-    }
-    return;
-  }
-
   if (errEl) errEl.style.display = 'none';
 
   appState.topupBusy = true;
-  const btn = document.getElementById('btnTopup');
-  const methodObj = TOPUP_METHODS.find(m => m.id === appState.topupMethod);
-  const methodLabel = methodObj ? methodObj.label : 'pembayaran';
+  const btn = document.getElementById('btnTopup') || document.getElementById('btnTopupDone');
 
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = `<span class="spin"></span> Memproses ${escapeHTML(methodLabel)}...`;
+    btn.innerHTML = `<span class="spin"></span> Memproses pengisian saldo...`;
   }
 
   /* 1. Simulate gateway processing */
@@ -1107,6 +1114,9 @@ window.changeDetailQty = changeDetailQty;
 window.buyFromDetail = buyFromDetail;
 window.handleBayar = handleBayar;
 window.openTopup = openTopup;
+window.renderTopupPage = renderTopupPage;
+window.renderTopupQr = renderTopupQr;
+window.generateTopupCode = generateTopupCode;
 window.pickTopupPreset = pickTopupPreset;
 window.onTopupInput = onTopupInput;
 window.pickTopupMethod = pickTopupMethod;

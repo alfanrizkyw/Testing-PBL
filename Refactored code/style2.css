@@ -1479,6 +1479,134 @@ input {
   color: var(--blue-primary);
 }
 
+/* Top-up QR Code Card */
+.topup-qr-card {
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 14px 0 18px;
+  box-shadow: 0 8px 24px -8px rgba(21, 94, 146, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.topup-qr-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #eaf8ef;
+  color: #1a7f37;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(26, 127, 55, 0.15);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1a7f37;
+  box-shadow: 0 0 0 0 rgba(26, 127, 55, 0.6);
+  animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(26, 127, 55, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(26, 127, 55, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(26, 127, 55, 0);
+  }
+}
+
+.topup-qr-box {
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.topup-qr-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.topup-qr-meta {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.topup-qr-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.topup-qr-code {
+  font-family: 'SF Mono', Monaco, Consolas, monospace;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--blue-deep);
+  letter-spacing: 0.05em;
+  background: var(--blue-pale);
+  padding: 5px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(21, 94, 146, 0.15);
+}
+
+.topup-qr-notice {
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f4f8fb;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 11px 14px;
+  text-align: left;
+  max-width: 380px;
+  width: 100%;
+}
+
+.topup-qr-notice .ic {
+  width: 18px;
+  height: 18px;
+  color: var(--blue-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.topup-qr-notice p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
 /* ================= TICKET ================= */
 
 .tabs {

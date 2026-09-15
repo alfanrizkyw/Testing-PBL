@@ -184,17 +184,35 @@
                  placeholder="cth. 150.000" oninput="onTopupInput()" autocomplete="off">
         </div>
 
-        <h3 style="margin-top:8px;"><span class="topup-step">2</span> Pilih metode pembayaran</h3>
-        <div class="topup-methods" id="topupMethods"></div>
+        <h3 style="margin-top:16px;"><span class="topup-step">2</span> Tunjukkan Kode QR ke Petugas</h3>
+        <div class="topup-qr-card">
+          <div class="topup-qr-status">
+            <span class="pulse-dot"></span>
+            <span>Siap dipindai petugas kasir</span>
+          </div>
+
+          <div class="topup-qr-box" id="topupQrBox">
+            <img id="topupQrImg" src="" alt="Kode QR Isi Ulang">
+          </div>
+
+          <div class="topup-qr-meta">
+            <span class="topup-qr-tag">KODE PENGISIAN SALDO</span>
+            <div class="topup-qr-code" id="topupQrCode">SL-TOPUP-XXXX</div>
+          </div>
+
+          <div class="topup-qr-notice">
+            <i data-lucide="scan-line" class="ic"></i>
+            <p>Tunjukkan kode QR ini ke petugas kasir di loket. Petugas akan memindai kode ini untuk menambahkan saldo melalui sistem kasir.</p>
+          </div>
+        </div>
 
         <div class="topup-summary">
           <div class="nota-row sub"><span>Saldo saat ini</span><span id="topupOld">Rp 100.000</span></div>
-          <div class="nota-row sub"><span>Jumlah isi ulang</span><span id="topupAdd">Rp 0</span></div>
-          <div class="nota-row sub"><span>Metode</span><span class="topup-method-inline" id="topupMethodLabel">—</span></div>
-          <div class="nota-total"><span>Saldo setelah isi ulang</span><span id="topupNew">Rp 100.000</span></div>
+          <div class="nota-row sub"><span>Nominal isi ulang</span><span id="topupAdd">Rp 0</span></div>
+          <div class="nota-total"><span>Estimasi saldo baru</span><span id="topupNew">Rp 100.000</span></div>
         </div>
 
-        <button class="btn btn-primary btn-block" id="btnTopup" onclick="handleTopup()">Bayar &amp; Isi Ulang</button>
+        <button class="btn btn-primary btn-block" id="btnTopupDone" onclick="goToPage(topupReturnTo || 'home')">Selesai / Kembali</button>
         <p id="topupError" style="color:var(--danger);font-size:13px;margin-top:10px;display:none;"></p>
       </div>
     </div>
